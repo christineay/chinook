@@ -118,6 +118,8 @@ class experiment:
             - *'threads'*: int, number of threads on which to calculate the matrix elements. 
             Requires very large calculation to see improvement over single core.
             
+            - *'scaling'*: float, if rad_type 'hydrogen_ext' is chosen, 'scaling' is the number to scale the hydrogenic radial wavefuction, default is 1 (no scaling)
+
             - *'slab'*: boolean, will truncate the eigenfunctions beyond the penetration depth (specifically 4x penetration depth), default is False
 
             - *'angle'*: float, rotation of sample about normal emission i.e. z-axis (radian), default is 0.0
@@ -207,7 +209,11 @@ class experiment:
             self.threads = ARPES_dict['threads']
         except KeyError:
             self.threads = 0
-            
+        try:
+            self.scaling = ARPES_dict['scaling']
+        except KeyError:
+            self.scaling = 1
+
     def update_pars(self,ARPES_dict,datacube=False):
         '''
         Several experimental parameters can be updated without re-calculating 
